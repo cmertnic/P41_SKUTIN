@@ -31,7 +31,7 @@ class ReportController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        $order->furniture_id = $request->input('furniture_id');
+        $order->furnitures_id = $request->input('furniture_id');
         $order->save();
 
         return response()->json(['success' => true]);
@@ -39,11 +39,11 @@ class ReportController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'furniture_id' => 'required|exists:furnitures,id',
+            'furnitures_id' => 'required|exists:furnitures,id',
         ]);
 
         $order = Order::findOrFail($id);
-        $order->furniture_id = $request->furniture_id;
+        $order->furnitures_id = $request->furnitures_id;
         $order->save();
 
         return redirect()->route('admin.index')->with('success', 'Статус обновлён успешно!');
@@ -54,7 +54,7 @@ class ReportController extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->paginate(10);
-        return view('welcome', ['orders' => $orders]);
+        return view('welcome', ['orders' => $orders,'furnitures']);
     }
 
     public function create()
@@ -82,7 +82,7 @@ class ReportController extends Controller
             'type' => $data['type'],
             'payment' => $data['payment'],
             'count' => $data['count'],
-            'furniture_id' => 1,
+            'furniture_id' => Furniture::id(),
             'user_id' => Auth::id(),
         ]);
 

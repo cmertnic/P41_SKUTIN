@@ -41,7 +41,6 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
     
-
         $credentials = $this->only('login', 'password');
     
 

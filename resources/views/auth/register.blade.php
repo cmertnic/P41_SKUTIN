@@ -13,7 +13,32 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif                
+        <!-- middlename -->
+                <div class="mt-4">
+            <x-text-input id="middlename" class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename')" required autofocus autocomplete="middlename" placeholder="Фамилия" maxlength="20" />
+            <x-input-error :messages="$errors->get('middlename')" class="mt-2" />
+        </div>
+        <!-- FirstName -->
+                <div class="mt-4">
+            <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" placeholder="Имя" maxlength="20" />
+            <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
+        </div>
+        <!-- lastname -->
+        <div class="mt-4">
+            <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus autocomplete="lastname" placeholder="Очество" maxlength="20" />
+            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+        </div>
+                 <!-- tel -->
+                 <div class="mt-4">
+                    <x-text-input id="tel" class="block mt-1 w-full"  type="tel" name="tel" :value="old('tel')" required autocomplete="tel" placeholder="Телефон" maxlength="20" />
+                    <x-input-error :messages="$errors->get('tel')" class="mt-2" />
+                </div>        
+                <!-- Email Address -->
+        <div class="mt-4">
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" placeholder="Почта" maxlength="20" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
           <!-- Login -->
           <div class="mt-4">
             <x-text-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus autocomplete="login" placeholder="Логин" maxlength="20" />
@@ -27,32 +52,10 @@
                             name="password"
                             required autocomplete="new-password" />
         </div>
-                <!-- midlename -->
-                <div class="mt-4">
-            <x-text-input id="midlename" class="block mt-1 w-full" type="text" name="midlename" :value="old('midlename')" required autofocus autocomplete="midlename" placeholder="Фамилия" maxlength="20" />
-            <x-input-error :messages="$errors->get('midlename')" class="mt-2" />
-        </div>
-                <!-- Name -->
-                <div class="mt-4">
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Имя" maxlength="20" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-        <!-- lastname -->
-        <div class="mt-4">
-            <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus autocomplete="lastname" placeholder="Очество" maxlength="20" />
-            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
-        </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" placeholder="Почта" maxlength="20" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-         <!-- tel -->
-         <div class="mt-4">
-            <x-text-input id="tel" class="block mt-1 w-full"  type="tel" name="tel" :value="old('tel')" required autocomplete="tel" placeholder="Телефон" maxlength="20" />
-            <x-input-error :messages="$errors->get('tel')" class="mt-2" />
-        </div>
+
+
+
         
 
         <div class="flex items-center justify-end mt-4">

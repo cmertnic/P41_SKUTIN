@@ -16,6 +16,6 @@ class Furniture extends Model
 
     public function furnitures()
     {
-        return $this->hasMany(Report::class, 'furnitures_id'); 
+        return $this->hasMany(Report::class, 'furniture_id'); 
     }
 }

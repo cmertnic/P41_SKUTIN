@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('payment');
             $table->string('count');
-            $table->foreignId('furnitures_id')->nullable()->constrained('furnitures')->onDelete('cascade');
+            $table->foreignId('furniture_id')->nullable()->constrained('furnitures')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

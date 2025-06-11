@@ -15,7 +15,7 @@ class Order extends Model
         'type',
         'payment',
         'count',
-        'furnitures_id', 
+        'furniture_id', 
         'user_id',
     ];
 
@@ -26,7 +26,7 @@ class Order extends Model
 
     public function furnitures() 
     {
-        return $this->belongsTo(Furniture::class, 'furnitures_id'); 
+        return $this->belongsTo(Furniture::class, 'furniture_id'); 
     }      
     
 }

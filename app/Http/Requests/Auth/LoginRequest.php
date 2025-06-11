@@ -27,8 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'login' => ['required', 'string'],
-            'email' => ['required', 'string'],
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,16 +41,15 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
     
-        $credentials = $this->only('email', 'password');
-        //$credentials = $this->only('login', 'password');
+
+        $credentials = $this->only('login', 'password');
     
-        $user = \App\Models\User::where('email', $credentials['email'])->first();
-      //$user = \App\Models\User::where('email', $credentials['login'])->first();
+
+      $user = \App\Models\User::where('email', $credentials['login'])->first();
         if (!$user) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
-                  //'login' =>[trans('auth.failed')],
-                'email' => [trans('auth.failed')],
+                  'login' =>[trans('auth.failed')],
             ]);
         }
     
@@ -81,8 +79,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            //'login' => trans('auth.throttle', [
-            'email' => trans('auth.throttle', [
+            'login' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -94,7 +91,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        //return Str::transliterate(Str::lower($this->string('login')).'|'.$this->ip());
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('login')).'|'.$this->ip());
     }
 }

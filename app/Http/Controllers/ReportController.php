@@ -2,54 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Statue;
-use App\Models\Report;
+use App\Models\Furniture;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
-{   //private function isAdminByEmail($email)
-    //{
-    //    return Auth::check() && Auth::user()->email === $email;
-    //}
+{  
     
-  //  private function isAdmin()
-  //  {
-  //      return Auth::check() && Auth::user()->role === 'admin';
-  //  }
+    private function isAdmin()
+    {
+        return Auth::check() && Auth::user()->role === 'admin';
+    }
     public function adminIndex()
     {
-    //    if (!$this->isAdmin()) {
-    //        abort(403, 'Недостаточно полномочий для доступа к этой странице.');
-    //    }
-    //if (!$this->isAdminByEmail('admin@example.com')) {
-    //   abort(403, 'Недостаточно полномочий для доступа к этой странице.');
-    //}
-        $reports = Report::paginate(10);
-        $statues = Statue::all();
+        if (!$this->isAdmin()) {
+            abort(403, 'Недостаточно полномочий для доступа к этой странице.');
+        }
 
-        return view('admin', compact('reports', 'statues'));
+        $orders = Order::paginate(10);
+        $furnitures = Furniture::all();
+
+        return view('admin', compact('orders', 'furnitures'));
     }
 
     public function updateStatus(Request $request, $id)
     {
-        $report = Report::findOrFail($id);
-        $report->statues_id = $request->input('status_id');
-        $report->save();
+        $order = Order::findOrFail($id);
+        $order->furniture_id = $request->input('furniture_id');
+        $order->save();
 
         return response()->json(['success' => true]);
     }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'statues_id' => 'required|exists:statues,id',
+            'furniture_id' => 'required|exists:furnitures,id',
         ]);
 
-        $report = Report::findOrFail($id);
-        $report->statues_id = $request->statues_id;
-        $report->save();
+        $order = Order::findOrFail($id);
+        $order->furniture_id = $request->furniture_id;
+        $order->save();
 
         return redirect()->route('admin.index')->with('success', 'Статус обновлён успешно!');
     }
@@ -58,31 +53,36 @@ class ReportController extends Controller
 
     public function index()
     {
-        $reports = Report::where('user_id', Auth::id())->paginate(10);
-        return view('welcome', ['reports' => $reports]);
+        $orders = Order::where('user_id', Auth::id())->paginate(10);
+        return view('welcome', ['orders' => $orders]);
     }
 
     public function create()
     {
-        // $services = Service::all();
-        $statues = Statue::all();
+        $furnitures = Furniture::all();
 
-        return view('request', compact('statues')); //('services', 'statues')); 
+        return view('request', compact('furnitures')); 
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            '' => 'required|string|max:255',
-            //   'service_id' => 'required|exists:services,id',
+            'date' => 'required|date|max:255',
+            'time' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'payment' => 'required|string|max:255',
+            'count' => 'required|integer|max:255',
         ]);
 
 
 
-        Report::create([
-            '' => $data[''],
-            //'service_id' => $data['service_id'],
-            'statues_id' => 1,
+        Order::create([
+            'date' => $data['date'],
+            'time' => $data['time'],
+            'type' => $data['type'],
+            'payment' => $data['payment'],
+            'count' => $data['count'],
+            'furniture_id' => 1,
             'user_id' => Auth::id(),
         ]);
 
